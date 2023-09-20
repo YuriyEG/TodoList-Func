@@ -24,8 +24,12 @@ const Timer = (itemId) => {
     setCount((count) => count + 1);
   };
 
-  const toggleTimer = (e) => {
 
+
+
+  const toggleTimer = (e) => {
+    e.stopPropagation();
+    console.log(e.target.id);
         loadTimeToId();
     if (!pause) {
       setPause((pause) => !pause);
@@ -45,8 +49,8 @@ const Timer = (itemId) => {
   }
 
   return (
-    <div className="timer">
-      <button className={buttonClass} id="button" onClick={toggleTimer}></button>
+    <div className="timer" >
+      <div className={buttonClass} id="timer-button" onClick={toggleTimer}></div>
       <span className="timer_info">{formatSeconds(count)}</span>
     </div>
   );
