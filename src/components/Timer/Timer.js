@@ -32,7 +32,7 @@ const Timer = () => {
 
   return (
     <div className="timer">
-      <button className={buttonClass} id="button" onClick={toggleTimer}></button>
+      <div className={buttonClass} id="button" onClick={toggleTimer}></div>
       <span className="timer_info">{formatSeconds(count)}</span>
     </div>
   );
