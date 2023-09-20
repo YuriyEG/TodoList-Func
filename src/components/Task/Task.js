@@ -69,7 +69,10 @@ function Task({ value, deleteTask, setTodoList, id, onToggleDone, important, don
             <div className="view">
               <div className={checkClass} onClick={onToggleDone}></div>
               <label>
-                <span className={taskClass}>{value}</span>
+                <span className={taskClass} onClick={onToggleDone}>
+                  {' '}
+                  {value}
+                </span>
                 <Timer id={id} />
                 <span className="created">created {distance} ago</span>
               </label>
