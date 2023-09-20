@@ -1,152 +1,135 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Footer from '../Footer';
 import NewTaskForm from '../NewTaskForm';
 import TaskList from '../TaskList';
 
-class TodoApp extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      all: true,
-      active: false,
-      completed: false,
-      listMode: 'all',
-      todoList: [
-        { value: 'first', id: 744331322556, important: false, done: false, time: new Date() },
-        { value: 'second', id: 640949365978, important: false, done: false, time: new Date() },
-      ],
-    };
+const TodoApp = () => {
+  const [all, setAll] = useState(true);
+  const [active, setActive] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  const [listMode, setListMode] = useState('all');
+  const [todoList, setTodoList] = useState([
+    { value: 'first', id: 744331322556, important: false, done: false, time: new Date() },
+    { value: 'second', id: 640949365978, important: false, done: false, time: new Date() },
+  ]);
+
+  let filteredTasks = todoList;
+
+  if (listMode === 'active') {
+    filteredTasks = [...todoList].filter((node) => node.done === false);
   }
-
-  render() {
-    let filteredTasks = this.state.todoList;
-    if (this.state.listMode === 'active') {
-      filteredTasks = this.state.todoList.filter((node) => node.done === false);
-    }
-    if (this.state.listMode === 'completed') {
-      filteredTasks = this.state.todoList.filter((node) => node.done === true);
-    }
-
-    const createTask = (e) => {
-      if (e.keyCode === 13 && e.target.value.replace(/ /g, '').length) {
-        const newTask = {
-          value: e.target.value,
-          id: Math.round(Math.random() * Date.now()).toString(),
-          important: false,
-          done: false,
-          time: new Date(),
-        };
-        e.target.value = '';
-        const newTodoList = [newTask, ...this.state.todoList];
-
-        this.setState({
-          todoList: newTodoList,
-        });
-      }
-    };
-
-    const deleteTask = (id) => {
-      const filteredList = [...this.state.todoList].filter((el) => el.id !== id);
-      this.setState({
-        todoList: filteredList,
-      });
-    };
-
-    const onToggleImportant = (id) => {
-      const indx = this.state.todoList.findIndex((el) => el.id === id);
-      const oldItem = this.state.todoList[indx];
-      const newItem = { ...oldItem, important: !oldItem.important };
-
-      const newArray = [...this.state.todoList.slice(0, indx), newItem, ...this.state.todoList.slice(indx + 1)];
-      this.setState({
-        todoList: newArray,
-      });
-    };
-
-    const onToggleDone = (id) => {
-      const indx = this.state.todoList.findIndex((el) => el.id === id);
-      const oldItem2 = this.state.todoList[indx];
-      const newItem2 = { ...oldItem2, done: !oldItem2.done };
-
-      const newArray2 = [...this.state.todoList.slice(0, indx), newItem2, ...this.state.todoList.slice(indx + 1)];
-      this.setState({
-        todoList: newArray2,
-      });
-    };
-
-    const setListMode = (mode) => {
-      if (mode === 'active') {
-        this.setState({ active: true });
-        this.setState({ all: false });
-        this.setState({ completed: false });
-      }
-      if (mode === 'completed') {
-        this.setState({ completed: true });
-        this.setState({ all: false });
-        this.setState({ active: false });
-      }
-
-      if (mode === 'all') {
-        this.setState({ completed: false });
-        this.setState({ all: true });
-        this.setState({ active: false });
-      }
-
-      this.setState({ listMode: mode });
-    };
-
-    const clearCompleted = () => {
-      const newArray = [];
-      [...this.state.todoList].forEach((node) => {
-        if (node.done !== true) {
-          newArray.push(node);
-        }
-      });
-      this.setState({ todoList: newArray });
-    };
-
-    const setTodoList = (id, editValue) => {
-      const indx = this.state.todoList.findIndex((el) => el.id === id);
-      const node = this.state.todoList[indx];
-      const editedTask = {
-        ...node,
-        value: editValue,
+  if (listMode === 'completed') {
+    filteredTasks = [...todoList].filter((node) => node.done === true);
+  }
+  const createTask = (e) => {
+    if (e.keyCode === 13 && e.target.value.replace(/ /g, '').length) {
+      const newTask = {
+        value: e.target.value,
+        id: Math.round(Math.random() * Date.now()).toString(),
+        important: false,
+        done: false,
         time: new Date(),
       };
-      const newTodoList = [...this.state.todoList.slice(0, indx), editedTask, ...this.state.todoList.slice(indx + 1)];
-      this.setState({ todoList: newTodoList });
+      e.target.value = '';
+      const newTodoList = [newTask, ...todoList];
+      setTodoList(newTodoList);
+    }
+  };
+
+  const deleteTask = (id) => {
+    const filteredList = [...todoList].filter((el) => el.id !== id);
+    setTodoList(filteredList);
+  };
+
+  const onToggleImportant = (id) => {
+    const indx = todoList.findIndex((el) => el.id === id);
+    const oldItem = todoList[indx];
+    const newItem = { ...oldItem, important: !oldItem.important };
+    const newArray = [...todoList.slice(0, indx), newItem, ...todoList.slice(indx + 1)];
+    setTodoList(newArray);
+  };
+
+  const onToggleDone = (id) => {
+    const indx = todoList.findIndex((el) => el.id === id);
+    const oldItem2 = todoList[indx];
+    const newItem2 = { ...oldItem2, done: !oldItem2.done };
+    const newArray2 = [...todoList.slice(0, indx), newItem2, ...todoList.slice(indx + 1)];
+    setTodoList(newArray2);
+  };
+
+  const setListModeFunc = (mode) => {
+    if (mode === 'active') {
+      setActive(true);
+      setAll(false);
+      setCompleted(false);
+    }
+    if (mode === 'completed') {
+      setCompleted(true);
+      setAll(false);
+      setActive(false);
+    }
+
+    if (mode === 'all') {
+      setCompleted(false);
+      setAll(true);
+      setActive(false);
+    }
+
+    setListMode(mode);
+  };
+
+  const clearCompleted = () => {
+    const newArray = [];
+    [...todoList].forEach((node) => {
+      if (node.done !== true) {
+        newArray.push(node);
+      }
+    });
+    setTodoList(newArray);
+  };
+
+  const setTodoListFunc = (id, editValue) => {
+    const indx = todoList.findIndex((el) => el.id === id);
+    const node = todoList[indx];
+    const editedTask = {
+      ...node,
+      value: editValue,
+      time: new Date(),
     };
+    const newTodoList = [...todoList.slice(0, indx), editedTask, ...todoList.slice(indx + 1)];
+    setTodoList(newTodoList);
+  };
 
-    const doneCount = this.state.todoList.filter((el) => el.done).length;
-    const todoCount = this.state.todoList.length - doneCount;
-    return (
-      <div className="todoapp" style={{ position: 'relative' }}>
-        <section className="main">
-          <NewTaskForm createTask={createTask} />
+  const doneCount = todoList.filter((el) => el.done).length;
+  const todoCount = todoList.length - doneCount;
 
-          <TaskList
-            todoList={filteredTasks}
-            deleteTask={deleteTask}
-            onToggleImportant={onToggleImportant}
-            onToggleDone={onToggleDone}
-            listMode={this.state.listMode}
-            setTodoList={setTodoList}
-          />
-          <Footer
-            todoCount={todoCount}
-            clearCompleted={clearCompleted}
-            setMode={setListMode}
-            all={this.state.all}
-            active={this.state.active}
-            completed={this.state.completed}
-          />
-        </section>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="todoapp" style={{ position: 'relative' }}>
+      <section className="main">
+        <NewTaskForm createTask={createTask} />
+
+        <TaskList
+          todoList={filteredTasks}
+          deleteTask={deleteTask}
+          onToggleImportant={onToggleImportant}
+          onToggleDone={onToggleDone}
+          listMode={listMode}
+          setTodoList={setTodoListFunc}
+        />
+        <Footer
+          todoCount={todoCount}
+          clearCompleted={clearCompleted}
+          setMode={setListModeFunc}
+          all={all}
+          active={active}
+          completed={completed}
+        />
+      </section>
+    </div>
+  );
+};
 
 TodoApp.defaultProps = {
   all: false,

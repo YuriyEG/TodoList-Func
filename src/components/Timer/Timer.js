@@ -6,12 +6,7 @@ import formatSeconds from '../../modules/formatSeconds';
 const Timer = (itemId) => {
   const [count, setCount] = useState(0);
   const [timerId, setTimerId] = useState(false);
-  const [full, setFull] = useState(0);
-  const [isStarted, setIsStarted] = useState(false);
-
   const [pause, setPause] = useState(false);
-  const [timerInfo, setTimerInfo] = useState('');
-  const [start, setStart] = useState(0);
 
   let buttonClass = 'timer_button';
   if (!pause) {

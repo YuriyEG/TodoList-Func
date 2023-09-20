@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types';
 
@@ -8,17 +8,6 @@ import Edit from '../Edit';
 function Task({ value, deleteTask, setTodoList, id, onToggleDone, important, done, time }) {
   const [editStatus, setEditStatus] = useState(false);
   const [editValue, setEditValue] = useState(value);
-
-  useEffect(() => {
-    if (!localStorage.getItem(String(id))) {
-      localStorage.setItem(String(id), String(0));
-    } else {
-      const res = localStorage.getItem(String(id));
-      console.log(res);
-    }
-
-    console.log(value);
-  }, [id]);
 
   let taskClass = '';
   if (done) {
