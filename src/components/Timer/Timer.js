@@ -8,12 +8,7 @@ import formatSeconds from '../../modules/formatSeconds';
 const Timer = () => {
   const [count, setCount] = useState(0);
   const [timerId, setTimerId] = useState(false);
-  const [full, setFull] = useState(0);
-  const [isStarted, setIsStarted] = useState(false);
-
   const [pause, setPause] = useState(false);
-  const [timerInfo, setTimerInfo] = useState('');
-  const [start, setStart] = useState(0);
 
   let buttonClass = 'timer_button';
   if (!pause) {
@@ -21,18 +16,14 @@ const Timer = () => {
   } else {
     buttonClass += ' timer_button-pause';
   }
-
   const tick = () => {
     setCount((count) => count + 1);
   };
-
-  const toggleTimer = (e) => {
-    console.log(e.target.id === 'button');
+  const toggleTimer = () => {
     if (!pause) {
       setPause((pause) => !pause);
       const id = setInterval(tick, 1000);
       setTimerId(id);
-      console.log(id);
     } else {
       setPause((pause) => !pause);
       clearInterval(timerId);
