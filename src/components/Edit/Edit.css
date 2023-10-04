@@ -16,4 +16,12 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.edit__close {
+	position: absolute;
+	width: 1000px;
+	height: 600px;
+	top: -180px;
+	left: -200px;
+	z-index: 8;
+}
 

@@ -1,9 +1,9 @@
 /* eslint-disable */
 
 import React, { useState } from 'react';
+import format from 'date-fns/format';
 
 import './Timer.css';
-import formatSeconds from '../../modules/formatSeconds';
 
 const Timer = () => {
   const [count, setCount] = useState(0);
@@ -30,10 +30,12 @@ const Timer = () => {
     }
   };
 
+  const timeString = `${Number(format(count * 1000, 'hh')) - 3}:${format(count * 1000, 'mm:ss')}`;
+
   return (
     <div className="timer">
       <div className={buttonClass} id="button" onClick={toggleTimer}></div>
-      <span className="timer_info">{formatSeconds(count)}</span>
+      <span className="timer_info">{timeString}</span>
     </div>
   );
 };

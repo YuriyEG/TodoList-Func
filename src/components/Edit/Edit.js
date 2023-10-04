@@ -4,17 +4,7 @@ import PropTypes from 'prop-types';
 const Edit = ({ editValue, setValue, saveTodo, closeEdit }) => {
   return (
     <li className="editing">
-      <div
-        style={{
-          position: 'absolute',
-          width: '1000px',
-          height: '600px',
-          top: '-180px',
-          left: '-200px',
-          zIndex: '8',
-        }}
-        onClick={closeEdit}
-      ></div>
+      <div className="edit__close" onClick={closeEdit}></div>
       <div className="view">
         <input className="toggle" type="checkbox" />
         <label>

@@ -90,7 +90,7 @@ const TodoApp = () => {
     setTodoList(newArray);
   };
 
-  const setTodoListFunc = (id, editValue) => {
+  const setTodoListHandler = (id, editValue) => {
     const indx = todoList.findIndex((el) => el.id === id);
     const node = todoList[indx];
     const editedTask = {
@@ -106,7 +106,7 @@ const TodoApp = () => {
   const todoCount = todoList.length - doneCount;
 
   return (
-    <div className="todoapp" style={{ position: 'relative' }}>
+    <div className="todoapp">
       <section className="main">
         <NewTaskForm createTask={createTask} />
 
@@ -116,7 +116,7 @@ const TodoApp = () => {
           onToggleImportant={onToggleImportant}
           onToggleDone={onToggleDone}
           listMode={listMode}
-          setTodoList={setTodoListFunc}
+          setTodoList={setTodoListHandler}
         />
         <Footer
           todoCount={todoCount}

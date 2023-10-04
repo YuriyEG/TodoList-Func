@@ -36,7 +36,7 @@ function Task({ value, deleteTask, setTodoList, id, onToggleDone, important, don
   };
 
   const saveTodo = (e) => {
-    if (e.keyCode === 13 && e.target.value.replace(/ /g, '').length) {
+    if (e.keyCode === 13 && e.target.value.trim().length) {
       setTodoList(id, editValue);
       setEditStatus(false);
     }
@@ -79,7 +79,7 @@ Task.defaultProps = {
   value: '',
   deleteTask: () => {},
   setTodoList: () => {},
-  id: '9999999',
+  id: '',
   onToggleImportant: () => {},
   onToggleDone: () => {},
   important: 'false',
